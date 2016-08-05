@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: consul-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: consul
+        member: consul-2
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: consul
+          image: "consul:v0.6.4"
+          args:
+            - "agent"
+            - "-data-dir=/var/lib/consul"
+            - "-server"
+            - "-bootstrap-expect=3"
+            - "-bind=0.0.0.0"
+            - "-advertise=10.215.243.62"
+            - "-client=0.0.0.0"
+            - "-retry-join=10.215.243.61"
+          volumeMounts:
+            - mountPath: /var/lib/consul
+              name: data
+          ports:
+          - containerPort: 8500
+            name: ui-port
+          - containerPort: 8400
+            name: alt-port
+          - containerPort: 53
+            name: udp-port
+          - containerPort: 443
+            name: https-port
+          - containerPort: 8080
+            name: http-port
+          - containerPort: 8301
+            name: serflan
+          - containerPort: 8302
+            name: serfwan
+          - containerPort: 8600
+            name: consuldns
+          - containerPort: 8300
+            name: server
+      volumes:
+        - name: data
+          gcePersistentDisk:
+            pdName: consul-2
+            fsType: ext4
