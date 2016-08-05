@@ -56,11 +56,13 @@ service "consul-http" created
 
 ```
 kubectl get svc
+```
+```
 NAME          CLUSTER-IP       EXTERNAL-IP     PORT(S)                                                                   AGE
 consul-1      10.215.243.61    <none>          8500/TCP,8400/TCP,8301/TCP,8301/UDP,8302/TCP,8302/UDP,8300/TCP,8600/TCP   5m
 consul-2      10.215.243.62    <none>          8500/TCP,8400/TCP,8301/TCP,8301/UDP,8302/TCP,8302/UDP,8300/TCP,8600/TCP   5m
 consul-3      10.215.243.63    <none>          8500/TCP,8400/TCP,8301/TCP,8301/UDP,8302/TCP,8302/UDP,8300/TCP,8600/TCP   5m
-consul-http   10.215.243.191   104.198.9.159   8500/TCP                                                                  29m
+consul-http   10.215.243.191   XXX.XXX.X.XXX   8500/TCP                                                                  29m
 kubernetes    10.215.240.1     <none>          443/TCP                                                                   13d
 ```
 
@@ -93,28 +95,6 @@ consul-3-3678840700-3bp3k   1/1       Running   0          1m
 kubectl logs consul-1-3104874582-6o4n4
 ```
 ```
-==> WARNING: Expect Mode enabled, expecting 3 servers
-==> Starting Consul agent...
-==> Starting Consul agent RPC...
-==> Consul agent running!
-         Node name: 'consul-1-3104874582-6o4n4'
-        Datacenter: 'dc1'
-            Server: true (bootstrap: false)
-       Client Addr: 0.0.0.0 (HTTP: 8500, HTTPS: -1, DNS: 8600, RPC: 8400)
-      Cluster Addr: 10.215.243.61 (LAN: 8301, WAN: 8302)
-    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
-             Atlas: <disabled>
-
-==> Log data will now stream in as it occurs:
-
-    2016/08/05 19:48:36 [INFO] raft: Node at 10.215.243.61:8300 [Follower] entering Follower state
-    2016/08/05 19:48:36 [INFO] serf: EventMemberJoin: consul-1-3104874582-6o4n4 10.215.243.61
-    2016/08/05 19:48:36 [INFO] serf: EventMemberJoin: consul-1-3104874582-6o4n4.dc1 10.215.243.61
-    2016/08/05 19:48:36 [INFO] consul: adding LAN server consul-1-3104874582-6o4n4 (Addr: 10.215.243.61:8300) (DC: dc1)
-    2016/08/05 19:48:36 [INFO] consul: adding WAN server consul-1-3104874582-6o4n4.dc1 (Addr: 10.215.243.61:8300) (DC: dc1)
-    2016/08/05 19:48:36 [ERR] agent: failed to sync remote state: No cluster leader
-    2016/08/05 19:48:38 [WARN] raft: EnableSingleNode disabled, and no known peers. Aborting election.
-consul $ kubectl logs consul-1-3104874582-6o4n4 -f
 ==> WARNING: Expect Mode enabled, expecting 3 servers
 ==> Starting Consul agent...
 ==> Starting Consul agent RPC...
