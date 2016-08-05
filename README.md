@@ -12,6 +12,7 @@ These are my rough notes on how to run a 3 node consul cluster on Kubernetes. Yo
 
 - 1 deployment per consul member
 - 1 service per consul member
+- 1 service to expose the consul UI
 - Use `spec.securityContext.fsGroup` to ensure the volume is writable by the consul process which is running as non-root.
 
 ```
@@ -20,13 +21,25 @@ spec:
     fsGroup: 1000
 ```
 
-## Create Volumes
+## Usage
+
+Clone this repo:
+
+```
+git clone https://github.com/kelseyhightower/consul-on-kubernetes.git
+```
+
+```
+cd consul-on-kubernetes
+```
+
+### Create Volumes
 
 ```
 gcloud compute disks create consul-1 consul-2 consul-3
 ```
 
-## Consul Services
+### Consul Services
 
 Create one service per consul member with a fixed cluster IP. 
 
@@ -51,7 +64,7 @@ consul-http   10.215.243.191   104.198.9.159   8500/TCP                         
 kubernetes    10.215.240.1     <none>          443/TCP                                                                   13d
 ```
 
-## Consul Deployment
+### Consul Deployment
 
 Create one deployment per consul member.
 
@@ -74,7 +87,7 @@ consul-2-3080431481-7mf6r   1/1       Running   0          1m
 consul-3-3678840700-3bp3k   1/1       Running   0          1m
 ```
 
-## Verification
+### Verification
 
 ```
 kubectl logs consul-1-3104874582-6o4n4
