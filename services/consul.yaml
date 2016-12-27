@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: consul-2
+  name: consul
   labels:
-    name: consul-2
+    name: consul
 spec:
-  clusterIP: 10.215.243.62
+  clusterIP: None
   ports:
     - name: http
       port: 8500
@@ -37,4 +37,3 @@ spec:
       targetPort: 8600
   selector:
     app: consul
-    member: consul-2
