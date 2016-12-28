@@ -1,7 +1,7 @@
 {
-  "ca_file": "/etc/tls/ca.crt",
-  "cert_file": "/etc/tls/server.crt",
-  "key_file": "/etc/tls/server.key",
+  "ca_file": "/etc/tls/ca.pem",
+  "cert_file": "/etc/tls/consul.pem",
+  "key_file": "/etc/tls/consul-key.pem",
   "verify_incoming": true,
   "verify_outgoing": true,
   "verify_server_hostname": true

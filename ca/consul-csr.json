@@ -1,16 +1,7 @@
 {
-  "CN": "consul.default.svc.cluster.local",
+  "CN": "server.dc1.cluster.local",
   "hosts": [
-    "consul-0.dc1.cluster.local",
-    "consul-0.consul.default.svc.cluster.local",
-    "consul-1.dc1.cluster.local",
-    "consul-1.consul.default.svc.cluster.local",
-    "consul-2.dc1.cluster.local",
-    "consul-2.consul.default.svc.cluster.local",
-    "consul-3.dc1.cluster.local",
-    "consul-3.consul.default.svc.cluster.local",
-    "consul-4.dc1.cluster.local",
-    "consul-4.consul.default.svc.cluster.local",
+    "server.dc1.cluster.local",
     "127.0.0.1"
   ],
   "key": {

@@ -23,17 +23,22 @@ spec:
                   fieldPath: status.podIP
           args:
             - "agent"
-            - "-data-dir=/var/lib/consul"
-            - "-server"
-            - "-bootstrap-expect=3"
-            - "-bind=0.0.0.0"
             - "-advertise=$(POD_IP)"
+            - "-bind=0.0.0.0"
+            - "-bootstrap-expect=3"
             - "-client=0.0.0.0"
-            - "-ui"
+            - "-config-file=/etc/consul/server.json"
+            - "-data-dir=/var/lib/consul"
             - "-domain=cluster.local"
+            - "-server"
+            - "-ui"
           volumeMounts:
-            - mountPath: /var/lib/consul
-              name: data
+            - name: data
+              mountPath: /var/lib/consul
+            - name: config
+              mountPath: /etc/consul
+            - name: tls
+              mountPath: /etc/tls
           ports:
             - containerPort: 8500
               name: ui-port
@@ -53,6 +58,13 @@ spec:
               name: consuldns
             - containerPort: 8300
               name: server
+      volumes:
+        - name: config
+          configMap:
+            name: consul
+        - name: tls
+          secret:
+            secretName: consul  
   volumeClaimTemplates:
     - metadata:
         name: data

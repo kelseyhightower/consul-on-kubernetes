@@ -174,3 +174,11 @@ kubectl delete svc consul consul-http
 ```
 kubectl delete jobs consul-join
 ```
+
+```
+kubectl delete secrets consul
+```
+
+```
+kubectl delete configmaps consul
+```
