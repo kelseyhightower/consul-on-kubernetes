@@ -28,13 +28,15 @@ cd consul-on-kubernetes
 
 ### Generate TLS Certificates
 
-Communication between each Consul memeber will be encrypted using TLS.
+Communication between each Consul member will be encrypted using TLS.
 
-Create the Consul TLS certificates:
+Initialize a Certificate Authority (CA):
 
 ```
 cfssl gencert -initca ca/ca-csr.json | cfssljson -bare ca
 ```
+
+Create the Consul TLS certificate and private key:
 
 ```
 cfssl gencert \
