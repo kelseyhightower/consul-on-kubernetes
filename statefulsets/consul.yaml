@@ -21,7 +21,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-            - name: CONSUL_GOSSIP_ENCRYPTION_KEY
+            - name: GOSSIP_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: consul
@@ -36,7 +36,7 @@ spec:
             - "-datacenter=dc1"
             - "-data-dir=/var/lib/consul"
             - "-domain=cluster.local"
-            - "-encrypt=$(CONSUL_GOSSIP_ENCRYPTION_KEY)"
+            - "-encrypt=$(GOSSIP_ENCRYPTION_KEY)"
             - "-server"
             - "-ui"
           volumeMounts:

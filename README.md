@@ -66,7 +66,7 @@ consul.pem
 [Gossip communication](https://www.consul.io/docs/internals/gossip.html) between Consul members will be encrypted using a shared encryption key. Generate and store an encrypt key:
 
 ```
-CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
+GOSSIP_ENCRYPTION_KEY=$(consul keygen)
 ```
 
 ### Create the Consule Secret and Configmap
@@ -77,7 +77,7 @@ Store the gossip encryption key and TLS certificates in a Secret:
 
 ```
 kubectl create secret generic consul \
-  --from-literal="gossip-encryption-key=${CONSUL_GOSSIP_ENCRYPTION_KEY}" \
+  --from-literal="gossip-encryption-key=${GOSSIP_ENCRYPTION_KEY}" \
   --from-file=ca.pem \
   --from-file=consul.pem \
   --from-file=consul-key.pem
