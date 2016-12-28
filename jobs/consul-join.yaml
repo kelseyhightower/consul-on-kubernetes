@@ -1,16 +1,11 @@
-apiVersion: batch/v1.Job
+apiVersion: batch/v1
 kind: Job
 metadata:
   name: consul-join
 spec:
-  selector:
-    matchLabels:
-      task: join
   template:
     metadata:
       name: consul-join
-      labels:
-        task: join
     spec:
       containers:
         - name: consul
@@ -27,11 +22,4 @@ spec:
             - "-rpc-addr=consul-0.consul.$(NAMESPACE).svc.cluster.local:8400"
             - consul-1.consul.$(NAMESPACE).svc.cluster.local
             - consul-2.consul.$(NAMESPACE).svc.cluster.local
-      volumes:
-        - name: config
-          configMap:
-            name: consul
-        - name: tls
-          secret:
-            secretName: consul
       restartPolicy: Never
