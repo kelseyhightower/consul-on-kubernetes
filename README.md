@@ -35,9 +35,7 @@ cd consul-on-kubernetes
 
 ### Generate TLS Certificates
 
-Communication between each Consul member will be encrypted using TLS.
-
-Initialize a Certificate Authority (CA):
+RPC communication between each Consul member will be encrypted using TLS. Initialize a Certificate Authority (CA):
 
 ```
 cfssl gencert -initca ca/ca-csr.json | cfssljson -bare ca
@@ -54,7 +52,7 @@ cfssl gencert \
   ca/consul-csr.json | cfssljson -bare consul
 ```
 
-The `cfssl gencert` command will generate the following files:
+At this point you should have the following files in the current working directory:
 
 ```
 ca-key.pem
@@ -65,9 +63,7 @@ consul.pem
 
 ### Generate the Consul Gossip Encryption Key
 
-Communication between Consul members using the Serf gossip protocol will be encrypted using a shared encryption key.
-
-Generate and store an encrypt key using the `consul keygen` command:
+[Gossip communication](https://www.consul.io/docs/internals/gossip.html) between Consul members will be encrypted using a shared encryption key. Generate and store an encrypt key:
 
 ```
 CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
@@ -75,9 +71,9 @@ CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
 
 ### Create the Consule Secret and Configmap
 
-The Consul cluster will be configured using a combination of CLI flags, TLS certs, and a configuration file.
+The Consul cluster will be configured using a combination of CLI flags, TLS certificates, and a configuration file, which reference Kubernetes configmaps and secrets.
 
-Store the gossip encryption key and TLS certs in a Secret:
+Store the gossip encryption key and TLS certificates in a Secret:
 
 ```
 kubectl create secret generic consul \
@@ -109,7 +105,7 @@ Deploy a three (3) node Consul cluster using a StatefulSet:
 kubectl create -f statefulsets/consul.yaml
 ```
 
-Each consul member will be created one by one. Verify each member is `Running` before moving to the next step.
+Each Consul member will be created one by one. Verify each member is `Running` before moving to the next step.
 
 ```
 kubectl get pods
@@ -129,6 +125,8 @@ At this point each consul member is up and running. Start the `consul-join` job 
 kubectl create -f jobs/consul-join.yaml
 ```
 
+Ensure the `consul-join` job has completed:
+
 ```
 kubectl get jobs
 ```
@@ -139,9 +137,13 @@ consul-join   1         1            33s
 
 ### Verification
 
+At this point the Consul cluster has been bootstrapped and is ready for operation. To verify things are working correctly, review the logs for one of the cluster members.
+
 ```
 kubectl logs consul-0
 ```
+
+The consul CLI can also be used to check the health of the cluster. In a new terminal start a port-forward to the `consul-0` pod.
 
 ```
 kubectl port-forward consul-0 8400:8400
@@ -150,6 +152,8 @@ kubectl port-forward consul-0 8400:8400
 Forwarding from 127.0.0.1:8400 -> 8400
 Forwarding from [::1]:8400 -> 8400
 ```
+
+Run the `consul members` command to view the status of each cluster member.
 
 ```
 consul members
@@ -163,11 +167,13 @@ consul-2  10.176.1.16:8301  alive   server  0.7.2  2         dc1
 
 ### Accessing the Web UI
 
+The Consul UI does not support any form of authentication out of the box so it should not be exposed. To access the web UI, start a port-forward session to the `consul-0` Pod in a new terminal.
+
 ```
 kubectl port-forward consul-0 8500:8500
 ```
 
-Visit http://127.0.0.1:8500
+Visit http://127.0.0.1:8500 in your web browser.
 
 ![Image of Consul UI](images/consul-ui.png)
 
