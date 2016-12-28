@@ -1,8 +1,6 @@
-# Generate TLS Certificates
+# Consul Configuration
 
-```
-cd ca
-```
+## Generate TLS Certificates
 
 ```
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca
@@ -17,8 +15,17 @@ cfssl gencert \
   consul-csr.json | cfssljson -bare consul
 ```
 
+## Generate the Gossip Encryption Key
+
+```
+CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
+```
+
+## Create the consul secret
+
 ```
 kubectl create secret generic consul \
+  --from-literal="gossip-encryption-key=${CONSUL_GOSSIP_ENCRYPTION_KEY}" \
   --from-file=ca.pem \
   --from-file=consul.pem \
   --from-file=consul-key.pem
@@ -26,20 +33,24 @@ kubectl create secret generic consul \
 
 ```
 kubectl describe secret consul
-Name:		consul
-Namespace:	default
-Labels:		<none>
-Annotations:	<none>
+```
+```
+Name:           consul
+Namespace:      default
+Labels:         <none>
+Annotations:    <none>
 
-Type:	Opaque
+Type:    Opaque
 
 Data
 ====
-ca.pem:		1310 bytes
-consul-key.pem:	1675 bytes
-consul.pem:	1931 bytes
+ca.pem:                 1310 bytes
+consul-key.pem:         1679 bytes
+consul.pem:             1464 bytes
+gossip-encryption-key:  24 bytes
 ```
 
+## Create the consul configmap
 
 ```
 kubectl create configmap consul --from-file=configs/server.json

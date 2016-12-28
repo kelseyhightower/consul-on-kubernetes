@@ -21,6 +21,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: CONSUL_GOSSIP_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: consul
+                  key: gossip-encryption-key
           args:
             - "agent"
             - "-advertise=$(POD_IP)"
@@ -28,8 +33,10 @@ spec:
             - "-bootstrap-expect=3"
             - "-client=0.0.0.0"
             - "-config-file=/etc/consul/server.json"
+            - "-datacenter=dc1"
             - "-data-dir=/var/lib/consul"
             - "-domain=cluster.local"
+            - "-encrypt=$(CONSUL_GOSSIP_ENCRYPTION_KEY)"
             - "-server"
             - "-ui"
           volumeMounts:

@@ -4,5 +4,8 @@
   "key_file": "/etc/tls/consul-key.pem",
   "verify_incoming": true,
   "verify_outgoing": true,
-  "verify_server_hostname": true
+  "verify_server_hostname": true,
+  "ports": {
+    "https": 443
+  }
 }

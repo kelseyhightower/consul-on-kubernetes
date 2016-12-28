@@ -1,0 +1,6 @@
+ca-key.pem
+ca.csr
+ca.pem
+consul-key.pem
+consul.csr
+consul.pem
