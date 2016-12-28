@@ -107,6 +107,16 @@ consul-1  10.176.4.31:8301  alive   server  0.7.2  2         dc1
 consul-2  10.176.1.16:8301  alive   server  0.7.2  2         dc1
 ```
 
+### Accessing the Web UI
+
+```
+kubectl port-forward consul-0 8500:8500
+```
+
+Visit http://127.0.0.1:8500
+
+![Image of Consul UI](images/consul-ui.png)
+
 ## Cleanup
 
 ```
