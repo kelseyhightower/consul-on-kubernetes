@@ -30,6 +30,7 @@ spec:
             - "-advertise=$(POD_IP)"
             - "-client=0.0.0.0"
             - "-ui"
+            - "-domain=cluster.local"
           volumeMounts:
             - mountPath: /var/lib/consul
               name: data
