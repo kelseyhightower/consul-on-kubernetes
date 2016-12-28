@@ -2,6 +2,12 @@
 
 This tutorial will walk you through deploying a three (3) node [Consul](https://www.consul.io) cluster on Kubernetes.
 
+## Overview
+
+* Three (3) node Consul cluster using a StatefulSet
+* Cluster bootstrapping (consul join) using a Kubernetes job resource
+* Secure communication between Consul members
+
 ## Prerequisites
 
 * [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.5.x
