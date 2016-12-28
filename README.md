@@ -5,12 +5,17 @@ This tutorial will walk you through deploying a three (3) node [Consul](https://
 ## Overview
 
 * Three (3) node Consul cluster using a StatefulSet
-* Cluster bootstrapping (consul join) using a Kubernetes job resource
+* Cluster bootstrapping (consul join) using a Job
 * Secure communication between Consul members
 
 ## Prerequisites
 
+This tutorial leverages features available in Kubernetes 1.5.1 and later.
+
 * [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.5.x
+
+The following clients must be installed on the machine used to follow this tutorial:
+
 * [consul](https://www.consul.io/downloads.html) 0.7.2
 * [cfssl](https://pkg.cfssl.org) and [cfssljson](https://pkg.cfssl.org) 1.2
 
@@ -21,6 +26,8 @@ Clone this repo:
 ```
 git clone https://github.com/kelseyhightower/consul-on-kubernetes.git
 ```
+
+Change into the `consul-on-kubernetes` directory:
 
 ```
 cd consul-on-kubernetes
@@ -58,6 +65,8 @@ consul.pem
 
 ### Generate the Consul Gossip Encryption Key
 
+Communication between Consul members using the Serf gossip protocol will be encrypted using a shared encryption key.
+
 Generate and store an encrypt key using the `consul keygen` command:
 
 ```
@@ -66,7 +75,9 @@ CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
 
 ### Create the Consule Secret and Configmap
 
-Store the gossip encryption key and TLS certs in a Kubernetes secret:
+The Consul cluster will be configured using a combination of CLI flags, TLS certs, and a configuration file.
+
+Store the gossip encryption key and TLS certs in a Secret:
 
 ```
 kubectl create secret generic consul \
@@ -76,7 +87,7 @@ kubectl create secret generic consul \
   --from-file=consul-key.pem
 ```
 
-Store the Consul server configuration file in a Kubernetes configmap:
+Store the Consul server configuration file in a ConfigMap:
 
 ```
 kubectl create configmap consul --from-file=configs/server.json
