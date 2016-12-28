@@ -3,16 +3,16 @@
 ## Generate TLS Certificates
 
 ```
-cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+cfssl gencert -initca ca/ca-csr.json | cfssljson -bare ca
 ```
 
 ```
 cfssl gencert \
   -ca=ca.pem \
   -ca-key=ca-key.pem \
-  -config=ca-config.json \
+  -config=ca/ca-config.json \
   -profile=default \
-  consul-csr.json | cfssljson -bare consul
+  ca/consul-csr.json | cfssljson -bare consul
 ```
 
 ## Generate the Gossip Encryption Key
