@@ -154,26 +154,8 @@ Visit http://127.0.0.1:8500
 
 ## Cleanup
 
-```
-kubectl delete statefulset consul
-```
+Run the `cleanup` script to remove the Kubernetes resources created during this tutorial:
 
 ```
-kubectl delete pvc data-consul-0 data-consul-1 data-consul-2
-```
-
-```
-kubectl delete svc consul consul-http
-```
-
-```
-kubectl delete jobs consul-join
-```
-
-```
-kubectl delete secrets consul
-```
-
-```
-kubectl delete configmaps consul
+bash cleanup
 ```
