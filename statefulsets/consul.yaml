@@ -53,7 +53,7 @@ spec:
               name: alt-port
             - containerPort: 53
               name: udp-port
-            - containerPort: 443
+            - containerPort: 8443
               name: https-port
             - containerPort: 8080
               name: http-port

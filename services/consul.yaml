@@ -10,6 +10,9 @@ spec:
     - name: http
       port: 8500
       targetPort: 8500
+    - name: https
+      port: 443
+      targetPort: 8443
     - name: rpc
       port: 8400
       targetPort: 8400

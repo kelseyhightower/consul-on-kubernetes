@@ -6,6 +6,6 @@
   "verify_outgoing": true,
   "verify_server_hostname": true,
   "ports": {
-    "https": 443
+    "https": 8443
   }
 }
