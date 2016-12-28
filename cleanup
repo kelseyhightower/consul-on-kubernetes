@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm ca-key.pem ca.csr ca.pem consul-key.pem consul.csr consul.pem
 kubectl delete statefulset consul
 kubectl delete pvc data-consul-0 data-consul-1 data-consul-2
 kubectl delete svc consul consul-http
