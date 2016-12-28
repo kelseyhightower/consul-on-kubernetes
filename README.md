@@ -33,6 +33,20 @@ cfssl gencert \
 CONSUL_GOSSIP_ENCRYPTION_KEY=$(consul keygen)
 ```
 
+### Create the Consule Secret and Configmap
+
+```
+kubectl create secret generic consul \
+  --from-literal="gossip-encryption-key=${CONSUL_GOSSIP_ENCRYPTION_KEY}" \
+  --from-file=ca.pem \
+  --from-file=consul.pem \
+  --from-file=consul-key.pem
+```
+
+```
+kubectl create configmap consul --from-file=configs/server.json
+```
+
 ### Create the Consul Service
 
 ```
