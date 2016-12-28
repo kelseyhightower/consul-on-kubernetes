@@ -4,9 +4,9 @@ This tutorial will walk you through deploying a three (3) node [Consul](https://
 
 ## Overview
 
-* Three (3) node Consul cluster using a StatefulSet
-* Cluster bootstrapping (consul join) using a Job
-* Secure communication between Consul members
+* Three (3) node Consul cluster using a [StatefulSet](http://kubernetes.io/docs/concepts/abstractions/controllers/statefulsets)
+* Cluster bootstrapping (consul join) using a [Job](http://kubernetes.io/docs/user-guide/jobs)
+* Secure communication between Consul members using [TLS and encryption keys](https://www.consul.io/docs/agent/encryption.html)
 
 ## Prerequisites
 
