@@ -46,6 +46,13 @@ spec:
               mountPath: /etc/consul
             - name: tls
               mountPath: /etc/tls
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - consul leave
           ports:
             - containerPort: 8500
               name: ui-port
