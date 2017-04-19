@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: consul
-          image: consul:0.7.2
+          image: consul:0.8.1
           command:
             - "/bin/consul"
             - "join"
@@ -19,7 +19,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
           args:
-            - "-rpc-addr=consul-0.consul.$(NAMESPACE).svc.cluster.local:8400"
-            - consul-1.consul.$(NAMESPACE).svc.cluster.local
-            - consul-2.consul.$(NAMESPACE).svc.cluster.local
+            - "-http-addr=consul-0.consul.$(NAMESPACE).svc.cluster.local:8500"
+            - "consul-1.consul.$(NAMESPACE).svc.cluster.local"
+            - "consul-2.consul.$(NAMESPACE).svc.cluster.local"
       restartPolicy: Never
