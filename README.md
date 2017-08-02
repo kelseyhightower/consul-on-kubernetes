@@ -69,7 +69,7 @@ consul.pem
 GOSSIP_ENCRYPTION_KEY=$(consul keygen)
 ```
 
-### Create the Consule Secret and Configmap
+### Create the Consul Secret and Configmap
 
 The Consul cluster will be configured using a combination of CLI flags, TLS certificates, and a configuration file, which reference Kubernetes configmaps and secrets.
 
