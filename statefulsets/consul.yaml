@@ -15,7 +15,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: consul
-          image: "consul:0.8.1"
+          image: "consul:0.9.0"
           env:
             - name: POD_IP
               valueFrom:
@@ -32,9 +32,9 @@ spec:
             - "-bind=0.0.0.0"
             - "-bootstrap-expect=3"
             - "-client=0.0.0.0"
-            - "-config-file=/etc/consul/server.json"
+            - "-config-file=/consul/config/server.json"
             - "-datacenter=dc1"
-            - "-data-dir=/var/lib/consul"
+            - "-data-dir=/consul/data"
             - "-domain=cluster.local"
             - "-encrypt=$(GOSSIP_ENCRYPTION_KEY)"
             - "-server"
@@ -42,9 +42,9 @@ spec:
             - "-disable-host-node-id"
           volumeMounts:
             - name: data
-              mountPath: /var/lib/consul
+              mountPath: /consul/data
             - name: config
-              mountPath: /etc/consul
+              mountPath: /consul/config
             - name: tls
               mountPath: /etc/tls
           lifecycle:
