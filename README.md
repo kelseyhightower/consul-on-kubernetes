@@ -10,13 +10,13 @@ This tutorial will walk you through deploying a three (3) node [Consul](https://
 
 ## Prerequisites
 
-This tutorial leverages features available in Kubernetes 1.5.1 and later.
+This tutorial leverages features available in Kubernetes 1.6.0 and later.
 
-* [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.5.x
+* [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.7.x
 
 The following clients must be installed on the machine used to follow this tutorial:
 
-* [consul](https://www.consul.io/downloads.html) 0.7.2
+* [consul](https://www.consul.io/downloads.html) 0.9.0
 * [cfssl](https://pkg.cfssl.org) and [cfssljson](https://pkg.cfssl.org) 1.2
 
 ## Usage
