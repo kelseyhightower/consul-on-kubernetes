@@ -5,7 +5,6 @@ This tutorial will walk you through deploying a three (3) node [Consul](https://
 ## Overview
 
 * Three (3) node Consul cluster using a [StatefulSet](http://kubernetes.io/docs/concepts/abstractions/controllers/statefulsets)
-* Cluster bootstrapping (consul join) using a [Job](http://kubernetes.io/docs/user-guide/jobs)
 * Secure communication between Consul members using [TLS and encryption keys](https://www.consul.io/docs/agent/encryption.html)
 
 ## Prerequisites
@@ -115,24 +114,6 @@ NAME       READY     STATUS    RESTARTS   AGE
 consul-0   1/1       Running   0          50s
 consul-1   1/1       Running   0          29s
 consul-2   1/1       Running   0          15s
-```
-
-### Join the Consul Cluster Members
-
-At this point each consul member is up and running. Start the `consul-join` job to complete the cluster bootstrapping process.
-
-```
-kubectl create -f jobs/consul-join.yaml
-```
-
-Ensure the `consul-join` job has completed:
-
-```
-kubectl get jobs
-```
-```
-NAME          DESIRED   SUCCESSFUL   AGE
-consul-join   1         1            33s
 ```
 
 ### Verification
