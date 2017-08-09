@@ -10,12 +10,22 @@ spec:
       labels:
         app: consul
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - consul
+              topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 10
       securityContext:
         fsGroup: 1000
       containers:
         - name: consul
-          image: "consul:0.9.0"
+          image: "consul:0.9.1"
           env:
             - name: POD_IP
               valueFrom:
@@ -90,8 +100,6 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: data
-        annotations:
-          volume.beta.kubernetes.io/storage-class: default
       spec:
         accessModes:
           - ReadWriteOnce
