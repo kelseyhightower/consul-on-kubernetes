@@ -9,13 +9,18 @@ This tutorial will walk you through deploying a three (3) node [Consul](https://
 
 ## Prerequisites
 
-This tutorial leverages features available in Kubernetes 1.6.0 and later.
+This tutorial leverages features available in Kubernetes 1.11.0 and later.
 
-* [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.7.x
+* [kubernetes](http://kubernetes.io/docs/getting-started-guides/binary_release) 1.11.x
+
+```
+gcloud container clusters create consul \
+  --cluster-version 1.11.2-gke.9
+```
 
 The following clients must be installed on the machine used to follow this tutorial:
 
-* [consul](https://www.consul.io/downloads.html) 0.9.0
+* [consul](https://www.consul.io/downloads.html) 1.4.0-rc
 * [cfssl](https://pkg.cfssl.org) and [cfssljson](https://pkg.cfssl.org) 1.2
 
 ## Usage
@@ -96,6 +101,16 @@ Create a headless service to expose each Consul member internally to the cluster
 kubectl create -f services/consul.yaml
 ```
 
+### Create the Consul Service Account
+
+```
+kubectl apply -f serviceaccounts/consul.yaml
+```
+
+```
+kubectl apply -f clusterroles/consul.yaml
+```
+
 ### Create the Consul StatefulSet
 
 Deploy a three (3) node Consul cluster using a StatefulSet:
@@ -111,9 +126,9 @@ kubectl get pods
 ```
 ```
 NAME       READY     STATUS    RESTARTS   AGE
-consul-0   1/1       Running   0          50s
-consul-1   1/1       Running   0          29s
-consul-2   1/1       Running   0          15s
+consul-0   1/1       Running   0          20s
+consul-1   1/1       Running   0          20s
+consul-2   1/1       Running   0          20s
 ```
 
 ### Verification
@@ -127,11 +142,11 @@ kubectl logs consul-0
 The consul CLI can also be used to check the health of the cluster. In a new terminal start a port-forward to the `consul-0` pod.
 
 ```
-kubectl port-forward consul-0 8400:8400
+kubectl port-forward consul-0 8500:8500
 ```
 ```
-Forwarding from 127.0.0.1:8400 -> 8400
-Forwarding from [::1]:8400 -> 8400
+Forwarding from 127.0.0.1:8500 -> 8500
+Forwarding from [::1]:8500 -> 8500
 ```
 
 Run the `consul members` command to view the status of each cluster member.
@@ -140,10 +155,10 @@ Run the `consul members` command to view the status of each cluster member.
 consul members
 ```
 ```
-Node      Address           Status  Type    Build  Protocol  DC
-consul-0  10.176.4.30:8301  alive   server  0.7.2  2         dc1
-consul-1  10.176.4.31:8301  alive   server  0.7.2  2         dc1
-consul-2  10.176.1.16:8301  alive   server  0.7.2  2         dc1
+Node      Address          Status  Type    Build     Protocol  DC   Segment
+consul-0  10.32.2.8:8301   alive   server  1.4.0rc1  2         dc1  <all>
+consul-1  10.32.1.7:8301   alive   server  1.4.0rc1  2         dc1  <all>
+consul-2  10.32.0.13:8301  alive   server  1.4.0rc1  2         dc1  <all>
 ```
 
 ### Accessing the Web UI
